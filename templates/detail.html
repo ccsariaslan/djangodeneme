@@ -1,0 +1,91 @@
+{% extends 'layout.html' %}
+
+
+
+{% block body %}
+    
+
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Post content-->
+        <article>
+            <!-- Post header-->
+            <header class="mb-4">
+                <!-- Post title-->
+                <h1 class="fw-bolder mb-1"> {{ makale.title }} </h1>
+                <hr>
+                <!-- Post meta content-->
+                <div class="text-muted fst-italic mb-2">Bu içerik {{makale.created_date}} tarihinde <b>{{makale.author.username}}</b> tarafından oluşturulmuştur.</div>
+                <!-- Post categories-->
+            <hr>
+            </header>
+            <!-- Preview image figure-->
+            {% if makale.artimg %}
+            <img class="img-fluid rounded" src="{{makale.artimg.url}}" alt="">
+            {% endif %}
+            <!-- Post content-->
+            <section class="mb-5">
+                {{makale.content|safe}}
+            </section>
+        </article>
+        <!-- Comments section-->
+        
+
+        {% if comments %}
+
+        {% for comment in comments %}
+        <div class="d-flex flex-row comment-row">
+            <div class="p-2"><img src="https://i.imgur.com/8RKXAIV.jpg" alt="user" width="50" class="rounded-circle"></div>
+            <div class="comment-text active w-100">
+                <h6 class="font-medium">{{comment.commentauthor}}</h6> <span class="m-b-15 d-block">{{comment.commentarea}} </span> <br>
+                <div class="comment-footer"> <span class="text-muted float-right">{{comment.commentdate}}</span> </div>
+            </div>
+        </div>
+        <hr>
+        {% endfor %}
+
+        {% else %}
+
+           <div class="alert alert-danger">Henüz yorum yok.</div>
+
+        {% endif %}
+
+        <div class="card my-4">
+            <h5 class="card-header"> Yorum yap</h5>
+            <div class="card-body">
+                <!-- Comment form-->
+                <form class="mb-4" action="{% url 'article:comment' makale.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="formGroupExampleInput" style="margin-left: 10px; margin-top:5px;"> İsim;</label>
+                        <input name="commentauthor" type="text" class="form-control" id="formGroupExampleInput" placeholder="isminizi giriniz">
+                    </div>
+                    <div class="form-group">
+                    <label for="formGroupExampleInput" style="margin-left: 10px; margin-top:5px;"> Yorum;</label>
+                    <textarea name="commentcontent" class="form-control" rows="3" placeholder="Tartışmaya katılın!"></textarea>
+                    </div>
+                    <br>
+                    <button class="btn btn-danger" type="submit">Yorum ekle</button>
+                </form>
+                <hr>
+                
+
+
+
+            </div>
+
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+
+
+
+        <div class="row">
+                <div class="col-md-10 offset-md-3">
+                <div class="col-lg-8">
+                <h2>Makaleler</h2>
+                <hr>  
+                </div>
+            </div>
+        </div>
+<br>
+        <div class="row">
+        <div class="col-md-10 offset-md-3">
+        <div class="col-lg-8">
+
+        <form>    
+        {% csrf_token %}
+        <input type="text" name="keyword" class="input-sm" maxlength="64" placeholder="ara">
+        <button type="submit" class="btn btn-danger btn">ara</button>
+        </form>
+    </div>
+       </div>
+     </div>
+
+<br>
+        {% if makale %}
+                {% for i in makale %}
+                <div class="row">
+                <div class="col-md-10 offset-md-3">
+                        <div class="col-lg-8">
+                            <!-- Post content-->
+                            <article>
+                                <!-- Post header-->
+                                <header class="mb-4">
+                                    <!-- Post title-->
+                                    <h2 class="fw-bolder mb-1"> <a href="{% url 'article:detail' i.id %}">   {{ i.title }}     </a>  </h2>
+                                    <hr>
+                                    <!-- Post meta content-->
+                                    <div class="text-muted fst-italic mb-2">Bu içerik {{i.created_date}} tarihinde <b>{{i.author.username}}</b> tarafından oluşturulmuştur.</div>
+                                    <!-- Post categories-->
+                                <hr>
+                                </header>
+                                <!-- Preview image figure-->
+                                {% if i.artimg %}
+                                <a href="{% url 'article:detail' i.id %}"><img class="img-fluid rounded" src="{{i.artimg.url}}" alt=""></a>
+                                {% endif %}
+                                <!-- Post content-->
+                                <section class="mb-5">
+                                    {{i.content|safe|truncatewords:20}}
+                                </section>
+
+                                <a style="float: right;" href="{% url 'article:detail' i.id %}" class="btn btn-danger">devamını oku</a>
+
+                                <hr>
+
+                            </article>
+                            <!-- Comments section-->
+                    
+                            
+                    
+                    
+                    
+                    </div>
+                        </div>
+                    </div>
+                
+                {% endfor %}
+        {% else %}
+        <br>
+            <div class="row">
+            <div class="col-md-10 offset-md-3">
+            <div class="col-lg-8">
+            <div class="alert alert-danger">Makale bulunamadı!</div>  
+            </div>    
+            </div>
+            </div>
+            {% endif %}
+
+
+{% endblock %}

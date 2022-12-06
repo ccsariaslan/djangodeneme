@@ -1,0 +1,55 @@
+<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="{% url 'index' %}">CeyCey</a>
+    
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'about' %}">Hakkımızda</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'article:Makaleler' %}">Makaleler</a>
+          </li>
+        
+      </ul>
+        <ul class="navbar-nav ml-auto">
+        {% if request.user.is_authenticated %}
+
+
+        <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{request.user.username}}
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="{% url 'user:logoutu' %}">Çıkış yap</a>
+        <a class="dropdown-item" href="{% url 'article:dashboard' %}">Kontrol paneli</a>
+        <a class="dropdown-item" href="#">Hesabı sil</a>
+      </div>
+    </div>
+        {% else %}
+        
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'user:loginu' %}">Giriş</a>
+        </li>
+        
+        {% endif %}
+        
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'user:register' %}">Kayıt ol</a>
+        </li>
+        <ul>        
+        
+
+
+      </ul>
+
+
+
+      </ul>
+    </div>
+
+
+</nav>
+  
